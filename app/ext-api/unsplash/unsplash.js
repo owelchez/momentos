@@ -1,14 +1,22 @@
 const axios = require('axios');
-//const env = require("dotenv");
+const env = require("dotenv");
 
-axios
-  .get('https://api.unsplash.com/photos/random', {
-    params: { query: 'motivational'},
-    headers: {
-      Authorization:
-      'Client-ID sz5_wP1HYmJj904LAdUp7JDdQSITHkJFANInqYyTK-w'
-    }
-  })
-  .then(response => {
-    console.log(response);
-  });
+let pictureResult = [];
+
+  //response.data.urls.raw
+let picture = axios.get('https://api.unsplash.com/photos/random', {
+           params: { query: 'motivational',
+                     orientation: 'landscape'
+                   },
+           headers: {
+             Authorization:
+             'Client-ID ' + process.env.UNSPLASH_ACCESS_KEY
+           }
+}).then(function(response){
+  if(response){
+    pictureResult.push(response.data.urls.full);
+    //console.log(pictureResult);
+  }
+});
+
+module.exports = pictureResult;
