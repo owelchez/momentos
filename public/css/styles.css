@@ -5,3 +5,28 @@ body {
     -o-background-size: cover;
     background-size: cover;
 }
+
+.register-user {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-size: 2em;
+}
+
+
+
+
+
+
+
+
+
+
+#greeting{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30%;
+  color: white;
+}
