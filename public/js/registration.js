@@ -10,7 +10,7 @@ createQuestion();
 
 function createQuestion(){
   createForm("¿Cual es tu nombre?", function(){
-    console.log(addButtonEvent('reg-button'));
+    //console.log(addButtonEvent('reg-button'));
     //let inputValue = addButtonEvent('reg-button');
 
     // addButtonEvent('reg-button', function(){
