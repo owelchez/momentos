@@ -1,23 +1,39 @@
-let newUser = {
-  name: '',
-  email: '',
-  password: ''
-}
+// // TODO:
+// Convert functions to promises
+// const promiseA = new Promise( (resolutionFunc,rejectionFunc) => {
+//     resolutionFunc(777);
+// });
+// // At this point, "promiseA" is already settled.
+// promiseA.then( (val) => console.log("asynchronous logging has val:",val) );
+// console.log("immediate logging");
 
-greeting();
+// produces output in this order:
+// immediate logging
+// asynchronous logging has val: 777
 
-createQuestion();
+
+const getUserInfo = new Promise(function(resolve, reject){
+  let newUser = {
+    name: '',
+    email: '',
+    password: ''
+  }
+  greeting();
+  createQuestion();
+  resolve();
+}).then(function(formData){
+
+  console.log(formData);
+})
+
+
+
+
+
+
 
 function createQuestion(){
-  createForm("¿Cual es tu nombre?", function(){
-    //console.log(addButtonEvent('reg-button'));
-    //let inputValue = addButtonEvent('reg-button');
-
-    // addButtonEvent('reg-button', function(){
-    //       let inputValue = document.getElementById("registration-name").value;
-    //       console.log(inputValue);
-    // });
-  });
+  createForm("¿Cual es tu nombre?");
 }
 
 function showMessage(){
@@ -40,7 +56,7 @@ function addButtonEvent(buttonId){
   let input_text = '';
   document.getElementById(buttonId).addEventListener('click', function(){
     input_text = document.getElementById("registration-name").value;
-    console.log('Inside event listener ' + input_text);
+    console.log(input_text);
     return input_text;
   });
 }
@@ -61,7 +77,7 @@ function createForm(question, callback){
   form.appendChild(inputBox);
   form.appendChild(inputButton);
   document.getElementById("form-container").appendChild(form);
-  callback();
+  //callback();
 }
 
 function askInput(question){
@@ -76,3 +92,13 @@ function removeAllChildNodes(parent) {
         parent.removeChild(parent.firstChild);
     }
 }
+
+
+// const readFilePromise = () => {
+//   return new Promise((resolve, reject) => {
+//     fs.readFile(filePath, options, (err, data) => {
+//       if (err) return reject(err)
+//       resolve(data)
+//     })
+//   })
+// }

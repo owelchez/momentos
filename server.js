@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const env = require('dotenv').config();
 const app = express();
-const unsplashPic = require('./app/ext-api/unsplash/unsplash.js');
+const helper = require('./app/ext-api/helpers/helpers.js');
 const ejs = require('ejs');
 
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(req, res){
   let picture = '';
-  unsplashPic.getUnsplashPicture()
+  helper.getUnsplashPicture()
   .then(function(response){
     picture = response;
   }).then(function(){
