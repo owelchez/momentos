@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const env = require('dotenv').config();
 const app = express();
-const helper = require('./app/ext-api/helpers/helpers.js');
+const unsplash = require('./app/ext-api/unsplash-api/unsplash.js');
 const ejs = require('ejs');
 
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -15,12 +15,15 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(req, res){
   let picture = '';
-  helper.getUnsplashPicture()
-  .then(function(response){
-    picture = response;
-  }).then(function(){
-    res.render('pages/index', { picture: picture });
-  })
+  try {
+    unsplash().then(function(result){
+      picture = result;
+      res.render('pages/index', { picture: picture });
+    })
+  } catch(err){
+    console.log(err);
+  }
+
 });
 
 const port = process.env.PORT || 3000;
