@@ -6,6 +6,7 @@ const env = require('dotenv').config();
 const app = express();
 const unsplash = require('./app/ext-api/unsplash-api/unsplash.js');
 const ejs = require('ejs');
+const mongoose = require('./app/connection/mongoDBConnection.js')
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
