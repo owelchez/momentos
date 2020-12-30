@@ -15,10 +15,6 @@ async function getPicture(){
   }
 }
 
-// const picture = getPicture().then(function(result){
-//   console.log("Server " + result);
-// })
-
 module.exports = getPicture;
 
 // const getPicture = async (resolve, reject) => {
