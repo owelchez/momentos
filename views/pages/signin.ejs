@@ -1,5 +1,9 @@
 <%- include("../partials/header"); -%>
 
+<% if(locals.errors) { %>
+  <div class="alert alert-danger" role="alert"><%= errors %></div>
+<% } %>
+
 <%- include("../partials/signInForm"); -%>
 
 <%- include("../partials/footer"); -%>

@@ -7,6 +7,13 @@ function mouseoutPass(obj) {
   obj.type = "password";
 }
 
+var message = $( '.message' );
+if ( message.length ) {
+    setTimeout( function() {
+        message.fadeOut( 'slow' );
+    }, 5000 );
+}
+
 
 //
 // const getUserInfo = new Promise(function(resolve, reject){

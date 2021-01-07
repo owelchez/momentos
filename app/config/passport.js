@@ -1,53 +1,53 @@
-const LocalStrategy = require('passport-local').Strategy;
-const bCrypt = require('bCrypt');
-
-// Load User model
-const User = require('../models/user');
-
-module.export = function(passport){
-  passport.use(
-    new LocalStrategy({ usernameField: 'username', (username, password, done) => {
-      // Find username in DB.
-      User.findOne({
-        username: username
-      }).then(user => {
-        if(!user){
-          return done(null, false, { message: 'The username does not exist'});
-        }
-
-        // Match password.
-        bCrypt.compare(password, username.password, (err, isMatch) => {
-          if(err) throw err;
-          if(isMatch){
-            return done(null, user);
-          } else {
-            return done(null, false, { message: 'Password is incorrect' });
-          }
-        });
-      });
-    }})
-  );
-
-  passport.serializeUser(function(user, done){
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(function(user, done){
-    User.findById(id, function(err, user){
-      done(err, user);
-    });
-  });
-};
-
-  passport.deserializeUser(function(id, done){
-    User.findById(id).then(function(user){
-      if(user){
-        done(null, user.get());
-      } else {
-        done(user.errors, null);
-      }
-    });
-  });
+// const LocalStrategy = require('passport-local').Strategy;
+// const bCrypt = require('bCrypt');
+//
+// // Load User model
+// const User = require('../models/user');
+//
+// module.export = function(passport){
+//   passport.use(
+//     new LocalStrategy({ usernameField: 'username', (username, password, done) => {
+//       // Find username in DB.
+//       User.findOne({
+//         username: username
+//       }).then(user => {
+//         if(!user){
+//           return done(null, false, { message: 'The username does not exist'});
+//         }
+//
+//         // Match password.
+//         bCrypt.compare(password, username.password, (err, isMatch) => {
+//           if(err) throw err;
+//           if(isMatch){
+//             return done(null, user);
+//           } else {
+//             return done(null, false, { message: 'Password is incorrect' });
+//           }
+//         });
+//       });
+//     }})
+//   );
+//
+//   passport.serializeUser(function(user, done){
+//     done(null, user.id);
+//   });
+//
+//   passport.deserializeUser(function(user, done){
+//     User.findById(id, function(err, user){
+//       done(err, user);
+//     });
+//   });
+// };
+//
+//   passport.deserializeUser(function(id, done){
+//     User.findById(id).then(function(user){
+//       if(user){
+//         done(null, user.get());
+//       } else {
+//         done(user.errors, null);
+//       }
+//     });
+//   });
 
   // passport.use('local-signup', new LocalStrategy(
   //   {
