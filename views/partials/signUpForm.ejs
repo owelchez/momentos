@@ -1,4 +1,22 @@
-<div class="container">
+<div class="error-messages">
+  <% if(error_msg.length > 0) { %>
+      <%  error_msg.forEach(error => { %>
+         <div class="alert alert-danger flash-message container">
+        <%= error.msg %>
+        </div>
+      <%  }) %>
+  <% } %>
+
+  <% if(error.length > 0) { %>
+      <%  error.forEach(error => { %>
+         <div class="alert alert-danger flash-message container">
+        <%= error %>
+        </div>
+      <%  }) %>
+  <% } %>
+</div>
+
+<div class="container signup-form">
   <form class="box" action="/register" method="post">
     <h1>SIGN UP</h1>
     <!-- <label for="username">Username</label> -->
