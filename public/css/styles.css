@@ -14,8 +14,17 @@ body {
   font-size: 2em;
 }
 
+.flash-message {
+  text-align: center;
+}
 
+.error-messages {
+  float: right;
+}
 
+.signup-form {
+  float: left;
+}
 
 
 

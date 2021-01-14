@@ -1,7 +1,7 @@
 <%- include("../partials/header"); -%>
 
-<% if(locals.errors) { %>
-  <div class="alert alert-danger" role="alert"><%= errors %></div>
+<% if(success_msg.length > 0) { %>
+  <div class="alert alert-success flash-message container"><%= success_msg %></div>
 <% } %>
 
 <%- include("../partials/signInForm"); -%>

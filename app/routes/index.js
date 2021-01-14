@@ -64,7 +64,7 @@ router.post(
   // Form inputs validation
   //req.body('email', 'Email is required').notEmpty();
   //req.body('email', 'Not a valid email address!').isEmail();
-  body('username', 'Please choose an username').notEmpty(),
+  body('username', 'Please choose a username').notEmpty(),
   body('firstname', 'Your first name is required').notEmpty(),
   body('lastname', 'Your last name is required').notEmpty(),
   body('password', 'Please provide a password').notEmpty(),
@@ -75,40 +75,67 @@ router.post(
     return true;
   }),
   (req, res) => {
+
     const errors = validationResult(req);
-    if(!errors.isEmpty()){
-      return res.status(400).json({ errors: errors.array() });
+    let errorsArray = errors.array();
+    for(i=0; i<errorsArray.length; i++){
+      console.log(errorsArray[i].msg);
     }
-    let newUser = {
-      username: req.body.username,
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      password: req.body.password
-    };
-    User.findOne({ username: newUser.username }).then(user => {
-      if(user){
-        return res.status(400).json({ username: "User already exists" });
-      } else {
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) throw err;
-            newUser.password = hash;
-            User.create({
-              username: newUser.username,
-              firstname: newUser.firstname,
-              lastname: newUser.lastname,
-              password: newUser.password
-            }, function(err){
-              if(err){
-                res.status(500).send('Something bad happened! Try again!');
-              } else {
-                res.redirect('/signin');
-              }
+    if(errorsArray){
+      if(errorsArray){
+        let picture = '';
+        try {
+          unsplash().then(function(result){
+            picture = result;
+            if(picture){
+              //console.log('This is picture in 90 ' + picture);
+              res.render('../views/pages/signup', { picture: picture, error_msg: errorsArray });
+            }
+          })
+        } catch(err){
+          console.log(err);
+        }
+      }
+    } else {
+      let newUser = {
+        username: req.body.username,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        password: req.body.password
+      };
+      User.findOne({ username: newUser.username }).then(user => {
+        if(user){
+          return res.status(400).json({ username: "User already exists" });
+        } else {
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if(err) throw err;
+              newUser.password = hash;
+              User.create({
+                username: newUser.username,
+                firstname: newUser.firstname,
+                lastname: newUser.lastname,
+                password: newUser.password
+              }, function(err){
+                if(err){
+                  res.status(500).send('Something bad happened! Try again!');
+                } else {
+                  let picture = '';
+                  try {
+                    unsplash().then(function(result){
+                      picture = result;
+                      res.render('../views/pages/signin', { picture: picture, success_msg: "You've signed up successfully" });
+                    })
+                  } catch(err){
+                    console.log(err);
+                  }
+                }
+              });
             });
           });
-        });
-      }
-    });
+        }
+      });
+    }
 });
 
 // Here we authenticate to '/login' POST request used by our login form
