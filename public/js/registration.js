@@ -7,12 +7,19 @@ function mouseoutPass(obj) {
   obj.type = "password";
 }
 
-var message = $( '.message' );
-if ( message.length ) {
-    setTimeout( function() {
-        message.fadeOut( 'slow' );
-    }, 5000 );
-}
+//
+// var message = $( '.message' );
+// if ( message.length ) {
+//     setTimeout( function() {
+//         message.fadeOut( 'slow' );
+//     }, 5000 );
+// }
+
+//
+// $('#register-form').on('click', function(e){
+//   console.log('Clicked');
+//   //e.preventDefault();
+// })
 
 
 //

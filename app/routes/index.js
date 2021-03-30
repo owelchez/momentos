@@ -56,6 +56,16 @@ router.get('/findall', function(req, res){
   });
 });
 
+router.post('/deleteall', function(req, res){
+  User.deleteMany({}, function(err){
+    if(err){
+      console.log(err);
+    } else {
+      console.log("Success deleting users!");
+      res.render('');
+    }
+  })
+});
 
  /*********************************************/
 
@@ -75,6 +85,8 @@ router.post(
     return true;
   }),
   (req, res) => {
+    // const inputName = req.body;
+    // console.log(inputName);
 
     const errors = validationResult(req);
     let errorsArray = errors.array();
@@ -82,20 +94,17 @@ router.post(
       console.log(errorsArray[i].msg);
     }
     if(errorsArray){
-      if(errorsArray){
         let picture = '';
         try {
           unsplash().then(function(result){
             picture = result;
             if(picture){
-              //console.log('This is picture in 90 ' + picture);
               res.render('../views/pages/signup', { picture: picture, error_msg: errorsArray });
             }
           })
         } catch(err){
           console.log(err);
         }
-      }
     } else {
       let newUser = {
         username: req.body.username,
@@ -103,6 +112,7 @@ router.post(
         lastname: req.body.lastname,
         password: req.body.password
       };
+      console.log("This is newUser " + newUser);
       User.findOne({ username: newUser.username }).then(user => {
         if(user){
           return res.status(400).json({ username: "User already exists" });
@@ -124,7 +134,7 @@ router.post(
                   try {
                     unsplash().then(function(result){
                       picture = result;
-                      res.render('../views/pages/signin', { picture: picture, success_msg: "You've signed up successfully" });
+                      res.redirect(200, '../views/pages/signin', { picture: picture, success_msg: "You've signed up successfully" });
                     })
                   } catch(err){
                     console.log(err);
@@ -136,6 +146,8 @@ router.post(
         }
       });
     }
+
+
 });
 
 // Here we authenticate to '/login' POST request used by our login form
